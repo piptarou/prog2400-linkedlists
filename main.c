@@ -26,7 +26,34 @@ int run_test_cases() {
 
     // at this point the code just says FAILED!! and not the designated printf
 
+    result = list_add(myLinkedList, 5);
+    if (result != 0) {
+        printf("FAILED test case due to failure to add 2\n");
+        return 1;
+    }
+
+    result = list_add(myLinkedList, 37);
+    if (result != 0) {
+        printf("FAILED test case due to failure to add 3\n");
+        return 1;
+    }
+
+    result = list_add(myLinkedList, 12);
+    if (result != 0) {
+        printf("FAILED test case due to failure to add 3\n");
+        return 1;
+    }
+
+    result = list_add(myLinkedList, 21);
+    if (result != 0) {
+        printf("FAILED test case due to failure to add 3\n");
+        return 1;
+    }
+
+    // code now passes???
+
     
+
 }
 
 int main() {
