@@ -12,7 +12,12 @@ int run_test_cases() {
         return 1;
     }
 
-    int result = list_add(myLinkedList, 20);
+    // Need to allocate memory on the heap and return a pointer to the memory address
+    // for that block of memory then need to take a pointer to an int and store the memory block address.
+    // Then have to dereference the pointer to access the block of memory and assign a value
+    int * intA = malloc(sizeof(int));
+    * intA = 20;
+    int result = list_add(myLinkedList, intA);
     if (result != 0) {
         printf("FAILED test case due to failure to add 1\n");
         return 1;
@@ -24,33 +29,37 @@ int run_test_cases() {
         return 1;
     }
 
-    // at this point the code just says FAILED!! and not the designated printf
-
-    result = list_add(myLinkedList, 5);
+    int * intB = malloc(sizeof(int));
+    * intB = 10;
+    result = list_add(myLinkedList, intB);
     if (result != 0) {
         printf("FAILED test case due to failure to add 2\n");
         return 1;
     }
 
-    result = list_add(myLinkedList, 37);
+    int * intC = malloc(sizeof(int));
+    * intC = 37;
+    result = list_add(myLinkedList, intC);
     if (result != 0) {
         printf("FAILED test case due to failure to add 3\n");
         return 1;
     }
 
-    result = list_add(myLinkedList, 12);
+    int * intD = malloc(sizeof(int));
+    * intD = 12;
+    result = list_add(myLinkedList, intD);
     if (result != 0) {
         printf("FAILED test case due to failure to add 3\n");
         return 1;
     }
 
-    result = list_add(myLinkedList, 21);
+    int * intE = malloc(sizeof(int));
+    * intE = 21;
+    result = list_add(myLinkedList, intE);
     if (result != 0) {
         printf("FAILED test case due to failure to add 3\n");
         return 1;
     }
-
-    // code now passes???
 
     actualSize = list_size(myLinkedList);
     if (actualSize != 5) {
@@ -58,8 +67,7 @@ int run_test_cases() {
         return 1;
     }
 
-    // looks like actualSize is failing
-
+    return 0;
 }
 
 int main() {
