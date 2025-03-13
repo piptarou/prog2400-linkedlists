@@ -1,3 +1,0 @@
-C:/Users/miran/OneDrive/Desktop/prog2400 - data structures/asmt2/prog2400-linkedlists/cmake-build-debug/CMakeFiles/prog2400_linkedlists.dir
-C:/Users/miran/OneDrive/Desktop/prog2400 - data structures/asmt2/prog2400-linkedlists/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/miran/OneDrive/Desktop/prog2400 - data structures/asmt2/prog2400-linkedlists/cmake-build-debug/CMakeFiles/rebuild_cache.dir
