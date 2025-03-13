@@ -41,3 +41,44 @@ int list_add(LinkedList * list, void * data) {
     list->size += 1;
     return 0;
 }
+
+int list_insert_at(LinkedList * list, size_t index, void * data) {
+    // will come back to
+}
+
+int list_get_at(LinkedList * list, size_t index, void ** out_data)
+{
+    // will come back to
+}
+
+int list_remove_at(LinkedList * list, size_t index, void ** out_data)
+{
+    // will come back to
+}
+
+size_t list_size(const LinkedList * list)
+{
+    if (list == NULL) return 0;
+    return list->size;
+}
+
+void list_destroy(LinkedList * list, void (* free_func)(void *))
+{
+    if (list == NULL) return;
+    if (list->size == 0) {
+        free(list);
+        return;
+    }
+    Node * cursor = list->head;
+    while (cursor->next != NULL) {
+        Node * toDelete = cursor;
+        cursor = cursor->next;
+
+        if (free_func != NULL) {
+            free_func(toDelete->data);
+        }
+        free(toDelete);
+    }
+    free(list);
+    free(cursor);
+}
