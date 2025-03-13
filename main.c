@@ -52,7 +52,13 @@ int run_test_cases() {
 
     // code now passes???
 
-    
+    actualSize = list_size(myLinkedList);
+    if (actualSize != 5) {
+        printf("FAILED test case due to size failure 2\n");
+        return 1;
+    }
+
+    // looks like actualSize is failing
 
 }
 
