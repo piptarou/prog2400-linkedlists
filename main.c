@@ -11,6 +11,22 @@ int run_test_cases() {
         printf("FAILED test case due to size failure on empty list\n");
         return 1;
     }
+
+    int result = list_add(myLinkedList, 20);
+    if (result != 0) {
+        printf("FAILED test case due to failure to add 1\n");
+        return 1;
+    }
+
+    actualSize = list_size(myLinkedList);
+    if (actualSize != 1) {
+        printf("FAILED test case due to size failure 2\n");
+        return 1;
+    }
+
+    // at this point the code just says FAILED!! and not the designated printf
+
+    
 }
 
 int main() {
