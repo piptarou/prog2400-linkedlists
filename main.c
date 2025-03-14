@@ -67,6 +67,14 @@ int run_test_cases() {
         return 1;
     }
 
+    int *container;
+
+    result = list_get_at(myLinkedList, 300, (void**)&container);
+    if (result != -1) {
+        printf("FAILED test case due to failure to handle invalid index\n");
+        return 1;
+    }
+
     return 0;
 }
 

@@ -48,7 +48,17 @@ int list_insert_at(LinkedList * list, size_t index, void * data) {
 
 int list_get_at(LinkedList * list, size_t index, void ** out_data)
 {
-    // will come back to
+    if (list == NULL) return -1;
+    if (index >= list->size) return -1;
+    if (out_data == NULL) return -1;
+
+    Node * cursor = list->head;
+    for (size_t i = 0; i < index; i++) {
+        cursor = cursor->next;
+    }
+
+    *out_data = cursor->data;
+    return 0;
 }
 
 int list_remove_at(LinkedList * list, size_t index, void ** out_data)
