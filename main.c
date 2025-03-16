@@ -67,14 +67,31 @@ int run_test_cases() {
         return 1;
     }
 
-    int *container;
+    int * container;
 
-    result = list_get_at(myLinkedList, 300, (void**)&container);
+    result = list_get_at(myLinkedList, 300, (void **)&container);
     if (result != -1) {
         printf("FAILED test case due to failure to handle invalid index\n");
         return 1;
     }
 
+    // test the insert
+    int * intF = malloc(sizeof(int));
+    *intF = 42;
+    result = list_insert_at(myLinkedList, 2, intF);
+    if (result != 0) {
+        printf("FAILED test case due to failure to insert at valid index\n");
+        free(intF);
+        return 1;
+    }
+
+    result = list_get_at(myLinkedList, 2, (void **)&container);
+    if (result != 0 || * container != 42) {
+        printf("FAILED test case due to incorrect value after insert\n");
+        return 1;
+    }
+
+    list_destroy(myLinkedList, free);
     return 0;
 }
 
