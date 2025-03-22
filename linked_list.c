@@ -88,7 +88,32 @@ int list_get_at(LinkedList * list, size_t index, void ** out_data)
 
 int list_remove_at(LinkedList * list, size_t index, void ** out_data)
 {
-    // will come back to
+    if (list == NULL) return -1;
+    if (index >= list->size) return -1;
+    if (out_data == NULL) return -1;
+
+    Node * current = list->head;
+    Node * previous = NULL;
+
+    for (size_t i = 0; i < index; i++) {
+        previous = current;
+        current = current->next;
+    }
+
+    * out_data = current->data;
+
+    if (previous == NULL) {
+        list->head = current->next;
+    } else {
+        previous->next = current->next;
+    }
+    if (current->next == NULL) {
+        list->tail = previous;
+    }
+
+    free(current);
+    list->size--;
+    return 0;
 }
 
 size_t list_size(const LinkedList * list)

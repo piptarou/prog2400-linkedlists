@@ -91,6 +91,27 @@ int run_test_cases() {
         return 1;
     }
 
+    // test list_remove_at
+    void* removed_data;
+    result = list_remove_at(myLinkedList, 2, &removed_data);
+    if (result != 0) {
+        printf("FAILED test case due to failure to remove at valid index\n");
+        return 1;
+    }
+
+    int* removed_int = (int*)removed_data;
+    if (*removed_int != 42) {
+        printf("FAILED test case due to incorrect value removed\n");
+        return 1;
+    }
+    free(removed_data);
+
+    actualSize = list_size(myLinkedList);
+    if (actualSize != 5) {
+        printf("FAILED test case due to incorrect size after removal\n");
+        return 1;
+    }
+
     list_destroy(myLinkedList, free);
     return 0;
 }
