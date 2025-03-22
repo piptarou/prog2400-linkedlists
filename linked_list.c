@@ -160,4 +160,80 @@ static void list_split(Node * head, Node ** a, Node ** b, size_t size) {
 
     * a = head;
     * b = current->next;
+    current->next = NULL; // this is need to split the linked list into 2 fully separate lists
+}
+
+// Merge two sorted linked lists by rearranging pointers
+// Uses a compare function pointer for generic data comparison
+static Node *merge(Node *a, Node *b, int (*compare_func)(void *, void *)) {
+    // Base cases - return the non-empty list when one list is exhausted
+    if (a == NULL) return b;
+    if (b == NULL) return a;
+
+    Node *result = NULL;
+
+    // Recursively build the merged list by selecting smaller element
+    // compare_func returns ≤0 if a's data should come before b's data
+    // This implementation maintains stability (equal elements preserve original order)
+    if (compare_func(a->data, b->data) <= 0) {
+        result = a;  // Take node from list a
+        // Recursively process the rest of list a with all of list b
+        result->next = merge(a->next, b, compare_func);
+    } else {
+        result = b;  // Take node from list b
+        // Recursively process all of list a with the rest of list b
+        result->next = merge(a, b->next, compare_func);
+    }
+
+    return result;
+}
+
+// Recursive merge sort function - implements divide and conquer strategy
+static void merge_sort(Node **headRef, size_t size, int (*compare_func)(void *, void *)) {
+    Node * head = *headRef;
+
+    // Base case - nothing to sort (empty list or single node is already sorted)
+    if (head == NULL || head->next == NULL) {
+        return;
+    }
+
+    Node *a;  // Will point to first half of the list
+    Node *b;  // Will point to second half of the list
+
+    // Split the list into two sublists - O(n/2) operation
+    list_split(head, &a, &b, size);
+
+    // Calculate sizes for recursive calls - important for efficient splitting
+    size_t a_size = size / 2;         // First half size
+    size_t b_size = size - a_size;    // Second half size (handles odd-length lists correctly)
+
+    // Recursively sort both sublists - T(n/2) work for each half
+    merge_sort(&a, a_size, compare_func);
+    merge_sort(&b, b_size, compare_func);
+
+    // Merge the two sorted sublists - O(n) operation
+    // This operation completes the merge sort for this level of recursion
+    *headRef = merge(a, b, compare_func);
+}
+
+// Main sorting function - public interface for the merge sort implementation
+int list_sort(LinkedList * list, int (* compare_func)(void *, void *)) {
+    // Validate inputs - return error code (-1) for invalid parameters
+    if (list == NULL) return -1;  // Cannot sort a NULL list
+    if (compare_func == NULL) return -1;  // Need a valid comparison function
+    if (list->size <= 1) return 0; // Already sorted - optimization for empty or single-element lists
+
+    // Perform the merge sort - modifies list->head in place
+    // Time complexity: O(n log n) where n is the number of elements
+    merge_sort(&(list->head), list->size, compare_func);
+
+    // Update tail pointer after sorting - essential for LinkedList integrity
+    // Many operations depend on having a valid tail pointer
+    Node *current = list->head;
+    while (current != NULL && current->next != NULL) {
+        current = current->next;
+    }
+    list->tail = current;  // Set tail to the last node in the sorted list
+
+    return 0;
 }

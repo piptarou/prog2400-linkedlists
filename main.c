@@ -116,6 +116,14 @@ int run_test_cases() {
     return 0;
 }
 
+// linked list merge sort
+
+int compare_ints(void * a, void * b) {
+    int * int_a = (int *)a;
+    int * int_b = (int *)b;
+    return *int_a - *int_b;
+}
+
 int main() {
     printf("welcome to the linked list test program!\n");
     int result = run_test_cases();
