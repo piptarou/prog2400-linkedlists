@@ -142,3 +142,22 @@ void list_destroy(LinkedList * list, void (* free_func)(void *))
     free(list);
     free(cursor);
 }
+
+// split linked list
+static void list_split(Node * head, Node ** a, Node ** b, size_t size) {
+    if (head == NULL || head->next == NULL) {
+        * a = head;
+        * b = NULL;
+        return;
+    }
+
+    size_t middle = size / 2;
+    Node * current = head;
+
+    for (size_t i = 0; i < middle - 1; i++) {
+        current = current->next;
+    }
+
+    * a = head;
+    * b = current->next;
+}

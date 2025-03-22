@@ -57,4 +57,6 @@ void list_iterator_reset(ListIterator *iter);
 // notice this has nothing to do with the list that this iterator is pointing to
 void list_iterator_destroy(ListIterator *iter);
 
+int list_sort(LinkedList * list, int (* compare_func)(void *, void *));
+
 #endif // SINGLY_LINKED_LIST_H
