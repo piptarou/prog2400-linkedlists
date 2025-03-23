@@ -124,13 +124,88 @@ int compare_ints(void * a, void * b) {
     return *int_a - *int_b;
 }
 
+int test_list_sort() {
+    LinkedList * list = list_create();
+    int * values[5];
+    int unsorted[] = {42, 17, 9, 36, 25};
+
+    for (int i = 0; i < 5; i++) {
+        values[i] = malloc(sizeof(int));
+        if (values[i] == NULL) {
+            printf("FAILED test case due to memory allocation failure\n");
+            for (int j = 0; j < i; j++) {
+                free(values[j]);
+            }
+            list_destroy(list, NULL);
+            return 1;
+        }
+
+        * values[i] = unsorted[i];
+        int result = list_add(list, values[i]);
+        if (result != 0) {
+            printf("FAILED test case due to failure to add element\n");
+            for (int j = 0; j <= i; j++) {
+                free(values[j]);
+            }
+            list_destroy(list, NULL);
+            return 1;
+        }
+    }
+
+    printf("Original list: ");
+    void * data;
+    for (size_t i = 0; i < 5; i++) {
+        list_get_at(list, i, &data);
+        printf("%d ", * (int *)data);
+    }
+    printf("\n");
+
+    int result = list_sort(list, compare_ints);
+    if (result != 0) {
+        printf("FAILED test case due to sort failure\n");
+        list_destroy(list, free);
+        return 1;
+    }
+
+    printf("Sorted list: ");
+    int expected[] = {9, 17, 25, 36, 42};
+
+    for (size_t i = 0; i < 5; i++) {
+        result = list_get_at(list, i, &data);
+        if (result != 0) {
+            printf("FAILED test case due to failure to get element\n");
+            list_destroy(list, free);
+            return 1;
+        }
+
+        int value = * (int *)data;
+        printf("%d ", value);
+
+        if (value != expected[i]) {
+            printf("\nFAILED test case due to incorrect sorting\n", i);
+            list_destroy(list, free);
+            return 1;
+        }
+    }
+    list_destroy(list, free);
+    return 0;
+}
+
 int main() {
     printf("welcome to the linked list test program!\n");
     int result = run_test_cases();
     if (result == 0){
         printf("Great success!\n");
+    } else
+    {
+        printf("FAILED!!\n");
+    }
+
+    result = test_list_sort();
+    if (result == 0) {
+        printf("Great success! All tests passed.\n");
     } else {
-        printf("FAILED!!");
+        printf("FAILED sort test!\n");
     }
     return 0;
 }
